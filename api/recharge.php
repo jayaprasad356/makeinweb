@@ -72,8 +72,10 @@ if ($num == 1) {
             $db->sql($sql);
             $res = $db->getResult();
             $earn = $res[0]['earn'];
+            $spin_count = $res[0]['spin_count'];
+            $spin_count = $spin_count + 1;
             $earn = $earn + $bonus_amount;
-            $sql = "UPDATE users SET `earn`= '$earn' WHERE `id`= '$level1_referral_id'";
+            $sql = "UPDATE users SET `earn`= '$earn',`spin_count`= '$spin_count' WHERE `id`= '$level1_referral_id'";
             $db->sql($sql);
         }
         if($level2_referral_id != 0){

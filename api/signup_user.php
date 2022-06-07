@@ -101,7 +101,7 @@ else{
 
 
 
-    $sql = "INSERT INTO users(`name`,`mobile`,`holder_name`,`account_no`,`ifsc_code`,`bank_name`,`referral`,`my_refer_code`,`level1_referral_id`,`level2_referral_id`,`level3_referral_id`,`earn`)VALUES('$name','$mobile','$holder_name','$account_no','$ifsc_code','$bank_name','$referral','$myrefercode',$level1_referral_id,$level2_referral_id,$level3_referral_id,0)";
+    $sql = "INSERT INTO users(`name`,`mobile`,`holder_name`,`account_no`,`ifsc_code`,`bank_name`,`referral`,`my_refer_code`,`level1_referral_id`,`level2_referral_id`,`level3_referral_id`,`earn`,`spin_count`)VALUES('$name','$mobile','$holder_name','$account_no','$ifsc_code','$bank_name','$referral','$myrefercode',$level1_referral_id,$level2_referral_id,$level3_referral_id,0,0)";
     $db->sql($sql);
     $res = $db->getResult();
     $sql = "SELECT * FROM users WHERE mobile ='$mobile'";

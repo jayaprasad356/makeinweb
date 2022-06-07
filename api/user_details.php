@@ -28,6 +28,7 @@ if ($num >= 1) {
         $temp['name'] = $row['name'];
         $temp['mobile'] = $row['mobile'];
         $temp['referral'] = $row['referral'];
+        $temp['spin_count'] = $row['spin_count'];
         $temp['my_refer_code'] = $row['my_refer_code'];
         $balance = $row['balance'];
         if($balance == NULL){

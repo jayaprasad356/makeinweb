@@ -32,14 +32,21 @@ if (isset($_POST['btnUpdate'])) {
         $spin_text_3 = (isset($_POST['spin_text_3'])) ? $db->escapeString($fn->xss_clean($_POST['spin_text_3'])) : "";
         $spin_text_4 = (isset($_POST['spin_text_4'])) ? $db->escapeString($fn->xss_clean($_POST['spin_text_4'])) : "";
         $spin_text_5 = (isset($_POST['spin_text_5'])) ? $db->escapeString($fn->xss_clean($_POST['spin_text_5'])) : "";
-        $spin_text_6 = (isset($_POST['spin_text_6'])) ? $db->escapeString($fn->xss_clean($_POST['spin_text_6'])) : "";
-        
-    
-       
-        
-      
-            $sql = "UPDATE earn_settings SET account_number='$account_number',ifsc_code='$ifsc_code',bank_name='$bank_name',name='$name',upi_id='$upi_id',minimum_setting='$minimum_setting',recharge_setting='$recharge_setting',service_link='$service_link',razorpay_payment_method='$razorpay_payment_method',razorpay_key='$razorpay_key',
-            razorpay_secret_key='$razorpay_secret_key',spin_text_1='$spin_text_1',spin_text_2='$spin_text_2',spin_text_3='$spin_text_3',spin_text_4='$spin_text_4',spin_text_5='$spin_text_5',spin_text_6='$spin_text_6' WHERE title='earn_settings'";
+        $spin_times_1 = (isset($_POST['spin_times_1'])) ? $db->escapeString($fn->xss_clean($_POST['spin_times_1'])) : "";
+        $spin_times_2 = (isset($_POST['spin_times_2'])) ? $db->escapeString($fn->xss_clean($_POST['spin_times_2'])) : "";
+        $spin_times_3 = (isset($_POST['spin_times_3'])) ? $db->escapeString($fn->xss_clean($_POST['spin_times_3'])) : "";
+        $spin_times_4 = (isset($_POST['spin_times_4'])) ? $db->escapeString($fn->xss_clean($_POST['spin_times_4'])) : "";
+        $spin_times_5 = (isset($_POST['spin_times_5'])) ? $db->escapeString($fn->xss_clean($_POST['spin_times_5'])) : "";
+
+        $totaltimes = $spin_times_1 + $spin_times_2 + $spin_times_3 + $spin_times_4 + $spin_times_5;
+ 
+        if ($totaltimes == 100) {
+            $sql = "UPDATE earn_settings SET account_number='$account_number',ifsc_code='$ifsc_code'
+            ,bank_name='$bank_name',name='$name',upi_id='$upi_id',minimum_setting='$minimum_setting',
+            recharge_setting='$recharge_setting',service_link='$service_link',spin_text_1='$spin_text_1',
+            spin_text_2='$spin_text_2',spin_text_3='$spin_text_3',spin_text_4='$spin_text_4',
+            spin_text_5='$spin_text_5',spin_times_1='$spin_times_1',spin_times_2='$spin_times_2'
+            ,spin_times_3='$spin_times_3',spin_times_4='$spin_times_4',spin_times_5='$spin_times_5' WHERE title='earn_settings'";
             $db->sql($sql);
             $earnsettings_result = $db->getResult();
             if (!empty($earnsettings_result)) {
@@ -55,6 +62,11 @@ if (isset($_POST['btnUpdate'])) {
             } else {
                 $error['add_menu'] = " <span class='label label-danger'>Failed</span>";
             }
+
+        }else{
+            $error['add_menu'] = " <span class='label label-danger'>Total Spin Times Should be 100</span>";
+        }
+ 
 
 }
 
@@ -157,12 +169,32 @@ foreach ($res as $row)
                                     <input type="text" class="form-control" name="spin_text_1" value="<?php echo $data['spin_text_1']?>">
                                 </div>
                                 <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Spin 1 (Times Out of 100)</label> <?php echo isset($error['spin_times_1']) ? $error['spin_times_1'] : ''; ?>
+                                    <input type="text" class="form-control" name="spin_times_1" value="<?php echo $data['spin_times_1']?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class='col-md-4'>
                                     <label for="exampleInputEmail1">Spin 2</label> <?php echo isset($error['spin_text_2']) ? $error['spin_text_2'] : ''; ?>
                                     <input type="text" class="form-control" name="spin_text_2" value="<?php echo $data['spin_text_2']?>">
                                 </div>
                                 <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Spin 2 (Times Out of 100)</label> <?php echo isset($error['spin_times_2']) ? $error['spin_times_2'] : ''; ?>
+                                    <input type="text" class="form-control" name="spin_times_2" value="<?php echo $data['spin_times_2']?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class='col-md-4'>
                                     <label for="exampleInputEmail1">Spin 3</label> <?php echo isset($error['spin_text_3']) ? $error['spin_text_3'] : ''; ?>
                                     <input type="text" class="form-control" name="spin_text_3" value="<?php echo $data['spin_text_3']?>">
+                                </div>
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Spin 3 (Times Out of 100)</label> <?php echo isset($error['spin_times_3']) ? $error['spin_times_3'] : ''; ?>
+                                    <input type="text" class="form-control" name="spin_times_3" value="<?php echo $data['spin_times_3']?>">
                                 </div>
                             </div>
                         </div>
@@ -173,12 +205,20 @@ foreach ($res as $row)
                                     <input type="text" class="form-control" name="spin_text_4" value="<?php echo $data['spin_text_4']?>">
                                 </div>
                                 <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Spin 4 (Times Out of 100)</label> <?php echo isset($error['spin_times_4']) ? $error['spin_times_4'] : ''; ?>
+                                    <input type="text" class="form-control" name="spin_times_4" value="<?php echo $data['spin_times_4']?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class='col-md-4'>
                                     <label for="exampleInputEmail1">Spin 5</label> <?php echo isset($error['spin_text_5']) ? $error['spin_text_5'] : ''; ?>
                                     <input type="text" class="form-control" name="spin_text_5" value="<?php echo $data['spin_text_5']?>">
                                 </div>
                                 <div class='col-md-4'>
-                                    <label for="exampleInputEmail1">Spin 6</label> <?php echo isset($error['spin_text_6']) ? $error['spin_text_6'] : ''; ?>
-                                    <input type="text" class="form-control" name="spin_text_6" value="<?php echo $data['spin_text_6']?>">
+                                    <label for="exampleInputEmail1">Spin 5 (Times Out of 100)</label> <?php echo isset($error['spin_times_5']) ? $error['spin_times_5'] : ''; ?>
+                                    <input type="text" class="form-control" name="spin_times_5" value="<?php echo $data['spin_times_5']?>">
                                 </div>
                             </div>
                         </div>
