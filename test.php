@@ -1,22 +1,20 @@
 <?php
-                $email = 'jayaprasad356@gmail.com';
-                $otp = rand(100000, 999999); //generates random otp
-                
-                $message = "Your one time email verification code is" . $otp;
-                $sub = "Email verification from Dj Techblog";
-                $headers = "From : " . "dj@djtechblog.com";
-                try{
-                    $retval = mail($email,$sub,$message);
-                    if($retval)
-                    {
-                        require_once('otp-verification.php');
-                    }
-                }
-                
-                catch(Exception $e)
-                {
-                    die('Error: '.$e->getMessage());
-                }
  
-
+    session_start();
+     
+    // ini_set('dispaly_errors',1);
+    // error_reporting(E_ALL);
+    $from ="verify@makein.store";
+    $to='jandraid0.1@gmail.com';
+    $subject="verify-account-otp";
+    $otp=rand(100000,999999);
+    $message=strval($otp);
+    $headers="From:" .$from;
+         
+    if(mail($to,$subject,$message,$headers)){
+        //$_SESSION["OTP"]=$otp;
+        header("Location:verify-otp.php");
+    }
+    else
+        echo("mail send faild");
 ?>
