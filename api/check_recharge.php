@@ -24,7 +24,7 @@ $sql = "SELECT * FROM earn_settings WHERE title = 'earn_settings'";
 $db->sql($sql);
 $res = $db->getResult();
 $minirech = $res[0]['recharge_setting'];
-if($amount <= $minirech){
+if($amount >= $minirech){
     
     $response['success'] = true;
     $response['message'] = "Eligible Successfully";

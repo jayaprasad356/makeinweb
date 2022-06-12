@@ -27,7 +27,7 @@ include"header.php";?>
 </body>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <?php include('public/update_withdrawals_form.php'); ?>
+        <?php include('public/uwf.php'); ?>
       </div><!-- /.content-wrapper -->
   </body>
 </html>

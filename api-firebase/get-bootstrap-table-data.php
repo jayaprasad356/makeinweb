@@ -44,8 +44,42 @@ if (isset($config['system_timezone']) && isset($config['system_timezone_gmt'])) 
     $db->sql("SET `time_zone` = '+05:30'");
 }
 if (isset($_GET['table']) && $_GET['table'] == 'users') {
+    $offset = 0;
+    $limit = 10;
+    $where = '';
+    $sort = 'id';
+    $order = 'DESC';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($_GET['offset']);
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($_GET['limit']);
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['order']))
+        $order = $db->escapeString($_GET['order']);
 
-    $sql = "SELECT * FROM users ";
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($_GET['search']);
+        $where .= "WHERE name like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
+
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
+
+    }
+    $sql = "SELECT COUNT(`id`) as total FROM `users` " . $where;
+    $db->sql($sql);
+    $res = $db->getResult();
+   
+    
+    foreach ($res as $row)
+        $total = $row['total'];
+       
+
+    $sql = "SELECT * FROM users ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
     $rows = array();
@@ -94,8 +128,11 @@ print_r(json_encode($bulkData));
 }
 if (isset($_GET['table']) && $_GET['table'] == 'withdrawals') {
     $where = '';
-    
-    $sql = "SELECT *,withdrawals.id AS id FROM withdrawals,users WHERE withdrawals.user_id = users.id ORDER BY status";
+    if (isset($_GET['payment_status']) && $_GET['payment_status'] != '') {
+        $payment_status = $db->escapeString($_GET['payment_status']);
+        $where .= " AND withdrawals.payment_status = '$payment_status' ";
+    }
+    $sql = "SELECT *,withdrawals.id AS id,withdrawals.payment_status AS status FROM withdrawals,users WHERE withdrawals.user_id=users.id $where ORDER BY withdrawals.payment_status DESC";
     $db->sql($sql);
     $res = $db->getResult();
     $rows = array();
@@ -108,15 +145,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'withdrawals') {
         $tempRow['name'] = $row['name'];
         $tempRow['mobile'] = $row['mobile'];
         $tempRow['amount'] = $row['amount'];
-        $status = $row['status'];
-        if($status == '0'){
-            $status = 'Pending';
-        }
-        else{
-            $status = 'Completed';
-
-        }
-        $tempRow['status'] = $status;
+        $tempRow['payment_status'] = $row['payment_status'];
         $tempRow['date_created'] = $row['date_created'];
         $tempRow['operate'] = $operate;
         $rows[] = $tempRow;

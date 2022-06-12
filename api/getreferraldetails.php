@@ -41,7 +41,7 @@ if (isset($_POST['level']) && $_POST['level'] == '1'){
                 $contribution = 0;
     
             }
-            $temp['contribution'] = $contribution;
+            $temp['contribution'] = round($contribution);
             $totalcontribution+= $contribution;
             $rows[] = $temp;
             
@@ -49,7 +49,7 @@ if (isset($_POST['level']) && $_POST['level'] == '1'){
         
         $response['success'] = true;
         $response['message'] = "Level 1 User Details Retrived Successfully";
-        $response['total_contribution'] = $totalcontribution;
+        $response['total_contribution'] = round($totalcontribution);
         $response['team_size'] = $num;
         $response['data'] = $rows;
         print_r(json_encode($response));
@@ -95,7 +95,7 @@ if (isset($_POST['level']) && $_POST['level'] == '2'){
                 $contribution = 0;
     
             }
-            $temp['contribution'] = $contribution;
+            $temp['contribution'] = round($contribution);
             $totalcontribution+= $contribution;
             $rows[] = $temp;
             
@@ -103,7 +103,7 @@ if (isset($_POST['level']) && $_POST['level'] == '2'){
         
         $response['success'] = true;
         $response['message'] = "Level 2 User Details Retrived Successfully";
-        $response['total_contribution'] = $totalcontribution;
+        $response['total_contribution'] = round($totalcontribution);
         $response['team_size'] = $num;
         $response['data'] = $rows;
         print_r(json_encode($response));
@@ -148,7 +148,7 @@ if (isset($_POST['level']) && $_POST['level'] == '3'){
                 $contribution = 0;
     
             }
-            $temp['contribution'] = $contribution;
+            $temp['contribution'] = round($contribution);
             $totalcontribution+= $contribution;
             $rows[] = $temp;
             
@@ -156,7 +156,7 @@ if (isset($_POST['level']) && $_POST['level'] == '3'){
         
         $response['success'] = true;
         $response['message'] = "Level 3 User Details Retrived Successfully";
-        $response['total_contribution'] = $totalcontribution;
+        $response['total_contribution'] = round($totalcontribution);
         $response['team_size'] = $num;
         $response['data'] = $rows;
         print_r(json_encode($response));

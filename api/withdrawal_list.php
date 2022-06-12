@@ -29,6 +29,7 @@ if ($num >= 1) {
         $temp['id'] = $row['id'];
         $temp['user_id'] = $row['user_id'];
         $temp['amount'] = $row['amount'];
+        $temp['payment_status'] = $row['payment_status'];
         if($row['status'] == 0){
             $status = "Pending";
         }
