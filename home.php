@@ -112,7 +112,7 @@ include "header.php";
                     <div class="small-box bg-green">
                         <div class="inner">
                         <h3><?php
-                            $sql = "SELECT SUM(amount) AS total FROM withdrawals WHERE status = '1'";
+                            $sql = "SELECT SUM(amount) AS total FROM withdrawals WHERE payment_status = 'Success'";
                             $db->sql($sql);
                             $res = $db->getResult();
                             $num = $res[0]['total'];
