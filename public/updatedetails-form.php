@@ -37,6 +37,8 @@ if (isset($_POST['btnUpdate'])) {
         $spin_times_3 = (isset($_POST['spin_times_3'])) ? $db->escapeString($fn->xss_clean($_POST['spin_times_3'])) : "";
         $spin_times_4 = (isset($_POST['spin_times_4'])) ? $db->escapeString($fn->xss_clean($_POST['spin_times_4'])) : "";
         $spin_times_5 = (isset($_POST['spin_times_5'])) ? $db->escapeString($fn->xss_clean($_POST['spin_times_5'])) : "";
+        $share_link = (isset($_POST['share_link'])) ? $db->escapeString($fn->xss_clean($_POST['share_link'])) : "";
+
 
         $totaltimes = $spin_times_1 + $spin_times_2 + $spin_times_3 + $spin_times_4 + $spin_times_5;
  
@@ -46,7 +48,7 @@ if (isset($_POST['btnUpdate'])) {
             recharge_setting='$recharge_setting',service_link='$service_link',spin_text_1='$spin_text_1',
             spin_text_2='$spin_text_2',spin_text_3='$spin_text_3',spin_text_4='$spin_text_4',
             spin_text_5='$spin_text_5',spin_times_1='$spin_times_1',spin_times_2='$spin_times_2'
-            ,spin_times_3='$spin_times_3',spin_times_4='$spin_times_4',spin_times_5='$spin_times_5' WHERE title='earn_settings'";
+            ,spin_times_3='$spin_times_3',spin_times_4='$spin_times_4',spin_times_5='$spin_times_5',share_link='$share_link' WHERE title='earn_settings'";
             $db->sql($sql);
             $earnsettings_result = $db->getResult();
             if (!empty($earnsettings_result)) {
@@ -160,6 +162,16 @@ foreach ($res as $row)
 
                             </div>
                         </div>
+                        <hr>
+                        <div class="row">
+                            <div class="form-group">
+                               <div class='col-md-12'>
+                                    <label for="exampleInputEmail1">Share Link</label> <?php echo isset($error['share_link']) ? $error['share_link'] : ''; ?>
+                                    <input type="text" class="form-control" name="share_link" value="<?php echo $data['share_link']?>">
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                         <h5>Spin Wheel </h5>
                         <hr>
                         <div class="row">

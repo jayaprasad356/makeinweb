@@ -17,6 +17,13 @@ if (isset($_POST['btnUpdate'])){
     $error = array();
     $name=$db->escapeString($fn->xss_clean($_POST['name']));
     $mobile=$db->escapeString($fn->xss_clean($_POST['mobile']));
+    $balance=$db->escapeString($fn->xss_clean($_POST['balance']));
+    $earn=$db->escapeString($fn->xss_clean($_POST['earn']));
+    $status=$db->escapeString($fn->xss_clean($_POST['status']));
+
+    $account_no=$db->escapeString($fn->xss_clean($_POST['account_no']));
+    $ifsc_code=$db->escapeString($fn->xss_clean($_POST['ifsc_code']));
+    $bank_name=$db->escapeString($fn->xss_clean($_POST['bank_name']));
     if (empty($name)) {
         $error['name'] = " <span class='label label-danger'>Required!</span>";
     }
@@ -25,7 +32,8 @@ if (isset($_POST['btnUpdate'])){
     }
     if (!empty($name)&& !empty($mobile))
     {
-        $sql = "UPDATE users SET name='$name',mobile='$mobile' WHERE id=$ID";
+        $sql = "UPDATE users SET name='$name',mobile='$mobile',balance='$balance',earn='$earn',status='$status',
+        account_no='$account_no',ifsc_code='$ifsc_code',bank_name='$bank_name' WHERE id=$ID";
         $db->sql($sql);
         $user_result = $db->getResult();
         if (!empty($user_result)) {
@@ -46,7 +54,7 @@ if (isset($_POST['btnUpdate'])){
 }
     
 $data = array();
-$sql = "SELECT name,mobile FROM users WHERE id = '$ID'";
+$sql = "SELECT * FROM users WHERE id = '$ID'";
 $db->sql($sql);
 $res = $db->getResult();
 foreach ($res as $row)
@@ -92,7 +100,65 @@ foreach ($res as $row)
                                 </div>
                             </div>
                        </div>
+                       <div class="row">
+                            <div class="form-group">
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Account Number</label> <i class="text-danger asterik">*</i><?php echo isset($error['account_no']) ? $error['account_no'] : ''; ?>
+                                    <input type="text" class="form-control" name="account_no" value="<?php echo $data['account_no']?>" required>
+                                </div>
+                            </div>
+                       </div>
+                       <div class="row">
+                            <div class="form-group">
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">IFSC Code</label> <i class="text-danger asterik">*</i><?php echo isset($error['ifsc_code']) ? $error['ifsc_code'] : ''; ?>
+                                    <input type="text" class="form-control" name="ifsc_code" value="<?php echo $data['ifsc_code']?>" required>
+                                </div>
+                            </div>
+                       </div>
+                       <div class="row">
+                            <div class="form-group">
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Bank Name</label> <i class="text-danger asterik">*</i><?php echo isset($error['bank_name']) ? $error['bank_name'] : ''; ?>
+                                    <input type="text" class="form-control" name="bank_name" value="<?php echo $data['bank_name']?>" required>
+                                </div>
+                            </div>
+                       </div>
                     <hr>
+                    <div class="row">
+                            <div class="form-group">
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Balance</label> <i class="text-danger asterik">*</i><?php echo isset($error['balance']) ? $error['balance'] : ''; ?>
+                                    <input type="number" class="form-control" name="balance" value="<?php echo $data['balance']?>" required>
+                                </div>
+                            </div>
+                       </div>
+                       <div class="row">
+                            <div class="form-group">
+                                <div class='col-md-4'>
+                                    <label for="exampleInputEmail1">Earn</label> <i class="text-danger asterik">*</i><?php echo isset($error['earn']) ? $error['earn'] : ''; ?>
+                                    <input type="number" class="form-control" name="earn" value="<?php echo $data['earn']?>" required>
+                                </div>
+                            </div>
+                       </div>
+                       <hr>
+                       <div class="row">
+                                <div class="form-group col-md-5">
+                                    <div class="form-group">
+                                        <label class="control-label">Status</label>
+                                        <div id="status" class="btn-group">
+                                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="status" value="1" <?= ($data['status'] == 1) ? 'checked' : ''; ?>> Active
+                                            </label>
+                                            <label class="btn btn-danger" data-toggle-class="btn-default" data-toggle-passive-class="btn-default">
+                                                <input type="radio" name="status" value="0" <?= ($data['status'] == 0) ? 'checked' : ''; ?>> Deactive
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
 
                        
                         
