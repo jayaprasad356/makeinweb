@@ -57,6 +57,7 @@ if ($num == 1) {
         $res = $db->getResult();
     
         if($level1_referral_id != 0){
+            $response['hello'] = true;
             $level = 1;
             $sql = "SELECT * FROM refer_commission";
             $db->sql($sql);

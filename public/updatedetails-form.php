@@ -245,7 +245,7 @@ foreach ($res as $row)
                                 </div>
                             </div>
                         </div>
-                        <!-- <h5>Razorpay Payments </h5>
+                        <h5>Razorpay Payments </h5>
                         <hr>
                         <div class="form-group">
                             <label for="razorpay_payment_method">Razorpay Payments <small>[ Enable / Disable ] </small></label><br>
@@ -259,7 +259,7 @@ foreach ($res as $row)
                         <div class="form-group">
                             <label for="razorpay_secret_key">Secret Key</label>
                             <input type="text" class="form-control" name="razorpay_secret_key" value="<?= (isset($data['razorpay_secret_key'])) ? $data['razorpay_secret_key'] : '' ?>" placeholder="Razorpay Secret Key " />
-                        </div> -->
+                        </div>
 
                     <!-- /.box-body -->
                     <div class="box-footer">
