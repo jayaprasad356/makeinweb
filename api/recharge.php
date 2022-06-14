@@ -47,7 +47,7 @@ if ($num == 1) {
     $db->sql($sql);
     $res = $db->getResult();
     $minirech = $res[0]['recharge_setting'];
-    if($amount <= $minirech){
+    if($amount >= $minirech){
         $sql = "INSERT INTO recharges (`user_id`,`amount`,`payment_type`,`status`) VALUES ('$user_id','$amount','$type','1')";
         $db->sql($sql);
         $res = $db->getResult();
@@ -115,7 +115,7 @@ if ($num == 1) {
     }
     else{
         $response['success'] = false;
-        $response['message'] = "Mnimium Rexcharge amount Rs. ". $minirech;
+        $response['message'] = "Mnimium Recharge amount Rs. ". $minirech;
 
     }
 
