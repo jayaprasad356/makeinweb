@@ -50,7 +50,7 @@ if (isset($_POST['btnUpdate'])) {
             spin_text_2='$spin_text_2',spin_text_3='$spin_text_3',spin_text_4='$spin_text_4',
             spin_text_5='$spin_text_5',spin_times_1='$spin_times_1',spin_times_2='$spin_times_2'
             ,spin_times_3='$spin_times_3',spin_times_4='$spin_times_4',spin_times_5='$spin_times_5',
-            share_link='$share_link',version='$version' WHERE title='earn_settings'";
+            share_link='$share_link',version='$version',razorpay_payment_method='$razorpay_payment_method',razorpay_key='$razorpay_key',razorpay_secret_key='$razorpay_secret_key' WHERE title='earn_settings'";
             $db->sql($sql);
             $earnsettings_result = $db->getResult();
             if (!empty($earnsettings_result)) {
