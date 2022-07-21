@@ -82,6 +82,8 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
     $sql = "SELECT * FROM users ". $where ." ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . "," . $limit;
     $db->sql($sql);
     $res = $db->getResult();
+    $bulkData = array();
+    $bulkData['total'] = $total;
     $rows = array();
     $tempRow = array();
     foreach ($res as $row) {
@@ -106,13 +108,48 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
     print_r(json_encode($bulkData));
 }
 if (isset($_GET['table']) && $_GET['table'] == 'plans') {
+    $offset = 0;
+    $limit = 10;
     $where = '';
-    
-    $sql = "SELECT * FROM plans";
+    $sort = 'id';
+    $order = 'DESC';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($_GET['offset']);
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($_GET['limit']);
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['order']))
+        $order = $db->escapeString($_GET['order']);
+
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($_GET['search']);
+        $where .= "WHERE price like '%" . $search . "%' OR id like '%" . $search . "%' OR email like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
+
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
+
+    }
+    $sql = "SELECT COUNT(`id`) as total FROM `plans` " . $where;
     $db->sql($sql);
     $res = $db->getResult();
-    $rows = array();
-    $tempRow = array();
+   
+    
+    foreach ($res as $row)
+        $total = $row['total'];
+       
+   
+    //$sql = "SELECT * FROM users $where ORDER BY $sort $order";
+    $sql = "SELECT * FROM plans " . $where . " ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . ", " . $limit;
+    $db->sql($sql);
+    $res = $db->getResult();
+    
+    $bulkData = array();
+    $bulkData['total'] = $total;
     foreach ($res as $row) {
 
         $operate = ' <a href="edit-plan.php?id=' . $row['id'] . '" title="Edit"><i class="fa fa-edit"></i></a>';
@@ -126,15 +163,51 @@ if (isset($_GET['table']) && $_GET['table'] == 'plans') {
 $bulkData['rows'] = $rows;
 print_r(json_encode($bulkData));
 }
-if (isset($_GET['table']) && $_GET['table'] == 'withdrawals') {
+if (isset($_GET['table']) && $_GET['table'] == 'withdrawals')
+{
+    $offset = 0;
+    $limit = 10;
     $where = '';
+    $sort = 'id';
+    $order = 'DESC';
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($_GET['offset']);
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($_GET['limit']);
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($_GET['sort']);
+    if (isset($_GET['order']))
+        $order = $db->escapeString($_GET['order']);
+
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($_GET['search']);
+        $where .= "WHERE name like '%" . $search . "%' OR id like '%" . $search . "%' OR email like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
+    }
+    if (isset($_GET['sort'])){
+        $sort = $db->escapeString($_GET['sort']);
+
+    }
+    if (isset($_GET['order'])){
+        $order = $db->escapeString($_GET['order']);
+
+    }
     if (isset($_GET['payment_status']) && $_GET['payment_status'] != '') {
         $payment_status = $db->escapeString($_GET['payment_status']);
         $where .= " AND withdrawals.payment_status = '$payment_status' ";
     }
-    $sql = "SELECT *,withdrawals.id AS id,withdrawals.payment_status AS status FROM withdrawals,users WHERE withdrawals.user_id=users.id $where ORDER BY withdrawals.payment_status DESC";
+    $sql = "SELECT COUNT(`id`) as total FROM `withdrawals` " . $where;
     $db->sql($sql);
     $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+
+    $sql = "SELECT *,withdrawals.id AS id FROM withdrawals,users WHERE withdrawals.user_id=users.id";
+    $db->sql($sql);
+    $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    
     $rows = array();
     $tempRow = array();
     foreach ($res as $row) {
