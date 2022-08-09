@@ -181,7 +181,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'withdrawals')
 
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $search = $db->escapeString($_GET['search']);
-        $where .= "WHERE name like '%" . $search . "%' OR id like '%" . $search . "%' OR email like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
+        $where .= " AND name like '%" . $search . "%' OR id like '%" . $search . "%' OR email like '%" . $search . "%' OR mobile like '%" . $search . "%' ";
     }
     if (isset($_GET['sort'])){
         $sort = $db->escapeString($_GET['sort']);
@@ -195,13 +195,13 @@ if (isset($_GET['table']) && $_GET['table'] == 'withdrawals')
         $payment_status = $db->escapeString($_GET['payment_status']);
         $where .= " AND withdrawals.payment_status = '$payment_status' ";
     }
-    $sql = "SELECT COUNT(`id`) as total FROM `withdrawals` " . $where;
+    $sql = "SELECT COUNT(`id`) as total FROM `withdrawals` WHERE id IS NOT NULL " . $where;
     $db->sql($sql);
     $res = $db->getResult();
     foreach ($res as $row)
         $total = $row['total'];
 
-    $sql = "SELECT *,withdrawals.id AS id FROM withdrawals,users WHERE withdrawals.user_id=users.id";
+    $sql = "SELECT *,withdrawals.id AS id FROM withdrawals,users WHERE withdrawals.user_id=users.id " . $where;
     $db->sql($sql);
     $res = $db->getResult();
 
