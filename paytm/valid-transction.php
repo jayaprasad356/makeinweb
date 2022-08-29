@@ -18,8 +18,15 @@ $paytmParams = array();
 
 /* body parameters */
 $access_key = 90336;
-$paytm_merchantid = 'lItpNj25953497830204';
-$paytm_merchantkey = 'pD49rhdi&npTucum';
+
+// $sql = "SELECT * FROM earn_settings WHERE title= 'earn_settings'";
+// $db->sql($sql);
+// $res = $db->getResult();
+$sql = "SELECT * FROM earn_settings WHERE title= 'earn_settings'";
+$db->sql($sql);
+$res = $db->getResult();
+$paytm_merchantid = $res[0]['paytm_merchant_id'];
+$paytm_merchantkey = $res[0]['paytm_merchant_key'];
 $paytmParams["body"] = array(
     /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
     "mid" => $paytm_merchantid,

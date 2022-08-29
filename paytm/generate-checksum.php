@@ -19,8 +19,11 @@ $access_key = 90336;
     // $data['merchant_key'] = $settings['paytm_merchant_key'];
     // $data['merchant_id'] = $settings['paytm_merchant_id'];
     /* add parameters in Array */
-    $paytm_merchantid = 'lItpNj25953497830204';
-    $paytm_merchantkey = 'pD49rhdi&npTucum';
+    $sql = "SELECT * FROM earn_settings WHERE title= 'earn_settings'";
+    $db->sql($sql);
+    $res = $db->getResult();
+    $paytm_merchantid = $res[0]['paytm_merchant_id'];
+    $paytm_merchantkey = $res[0]['paytm_merchant_key'];
     
     $paytm_params["MID"] = $paytm_merchantid;
 

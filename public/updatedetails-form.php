@@ -27,6 +27,9 @@ if (isset($_POST['btnUpdate'])) {
         $razorpay_payment_method = (isset($_POST['razorpay_payment_method'])) ? $db->escapeString($fn->xss_clean($_POST['razorpay_payment_method'])) : "";
         $razorpay_key = (isset($_POST['razorpay_key'])) ? $db->escapeString($fn->xss_clean($_POST['razorpay_key'])) : "";
         $razorpay_secret_key = (isset($_POST['razorpay_secret_key'])) ? $db->escapeString($fn->xss_clean($_POST['razorpay_secret_key'])) : "";
+        $paytm_payment_method = (isset($_POST['paytm_payment_method'])) ? $db->escapeString($fn->xss_clean($_POST['paytm_payment_method'])) : "";
+        $paytm_merchant_id = (isset($_POST['paytm_merchant_id'])) ? $db->escapeString($fn->xss_clean($_POST['paytm_merchant_id'])) : "";
+        $paytm_merchant_key = (isset($_POST['paytm_merchant_key'])) ? $db->escapeString($fn->xss_clean($_POST['paytm_merchant_key'])) : "";
         $spin_text_1 = (isset($_POST['spin_text_1'])) ? $db->escapeString($fn->xss_clean($_POST['spin_text_1'])) : "";
         $spin_text_2 = (isset($_POST['spin_text_2'])) ? $db->escapeString($fn->xss_clean($_POST['spin_text_2'])) : "";
         $spin_text_3 = (isset($_POST['spin_text_3'])) ? $db->escapeString($fn->xss_clean($_POST['spin_text_3'])) : "";
@@ -50,7 +53,8 @@ if (isset($_POST['btnUpdate'])) {
             spin_text_2='$spin_text_2',spin_text_3='$spin_text_3',spin_text_4='$spin_text_4',
             spin_text_5='$spin_text_5',spin_times_1='$spin_times_1',spin_times_2='$spin_times_2'
             ,spin_times_3='$spin_times_3',spin_times_4='$spin_times_4',spin_times_5='$spin_times_5',
-            share_link='$share_link',version='$version',razorpay_payment_method='$razorpay_payment_method',razorpay_key='$razorpay_key',razorpay_secret_key='$razorpay_secret_key' WHERE title='earn_settings'";
+            share_link='$share_link',version='$version',razorpay_payment_method='$razorpay_payment_method',razorpay_key='$razorpay_key',razorpay_secret_key='$razorpay_secret_key',
+            paytm_payment_method='$paytm_payment_method',paytm_merchant_id='$paytm_merchant_id',paytm_merchant_key='$paytm_merchant_key' WHERE title='earn_settings'";
             $db->sql($sql);
             $earnsettings_result = $db->getResult();
             if (!empty($earnsettings_result)) {
@@ -260,6 +264,21 @@ foreach ($res as $row)
                             <label for="razorpay_secret_key">Secret Key</label>
                             <input type="text" class="form-control" name="razorpay_secret_key" value="<?= (isset($data['razorpay_secret_key'])) ? $data['razorpay_secret_key'] : '' ?>" placeholder="Razorpay Secret Key " />
                         </div>
+                        <h5>Paytm Payments </h5>
+                        <hr>
+                        <div class="form-group">
+                            <label for="paytm_payment_method">Paytm Payments <small>[ Enable / Disable ] </small></label><br>
+                            <input type="checkbox" id="paytm_payment_method_btn" class="js-switch" <?= (isset($data['paytm_payment_method']) && !empty($data['paytm_payment_method']) && $data['paytm_payment_method'] == '1') ? 'checked' : ""; ?>>
+                            <input type="hidden" id="paytm_payment_method" name="paytm_payment_method" value="<?= (isset($data['paytm_payment_method']) && !empty($data['paytm_payment_method'])) ? $data['paytm_payment_method'] : 0; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="paytm_merchant_id">Merchant ID</label>
+                            <input type="text" class="form-control" name="paytm_merchant_id" value="<?= (isset($data['paytm_merchant_id'])) ? $data['paytm_merchant_id'] : '' ?>" placeholder="Paytm Merchant ID" />
+                        </div>
+                        <div class="form-group">
+                            <label for="paytm_merchant_key">Merchant Key</label>
+                            <input type="text" class="form-control" name="paytm_merchant_key" value="<?= (isset($data['paytm_merchant_key'])) ? $data['paytm_merchant_key'] : '' ?>" placeholder="Paytm Merchant Key " />
+                        </div>
 
                     <!-- /.box-body -->
                     <div class="box-footer">
@@ -289,6 +308,15 @@ foreach ($res as $row)
             $('#razorpay_payment_method').val(1);
         } else {
             $('#razorpay_payment_method').val(0);
+        }
+    };
+    var changeCheckbox = document.querySelector('#paytm_payment_method_btn');
+    var init = new Switchery(changeCheckbox);
+    changeCheckbox.onchange = function() {
+        if ($(this).is(':checked')) {
+            $('#paytm_payment_method').val(1);
+        } else {
+            $('#paytm_payment_method').val(0);
         }
     };
 
