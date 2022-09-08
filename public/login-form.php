@@ -31,7 +31,7 @@ if (isset($_POST['btnLogin'])) {
     // if email and password is not empty, check in database
     // if email and password is not empty, check in database
     if (!empty($email) && !empty($password)) {
-        if($email == 'admin' && $password == 'Akshat@2022'){
+        if($email == 'admin' && $password == 'Makein@2022'){
             $_SESSION['id'] = '1';
             $_SESSION['role'] ='admin';
             $_SESSION['username'] = 'bigwigg';
